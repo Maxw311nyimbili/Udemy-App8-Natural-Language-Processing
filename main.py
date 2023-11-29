@@ -41,5 +41,25 @@ analyzer = SentimentIntensityAnalyzer()
 # elif mood_dict["pos"] > mood_dict["neg"]:
 #     print("the mood is negative")
 
+# Checking the mood for all the cahpters in the book
+pattern = re.compile("Chapter [0-9]*")
+chapters = re.split(pattern, book)
+chapters = chapters[1:]
+
+mood_capture = []
+for chapter in chapters:
+    mood_dict = analyzer.polarity_scores(chapter)
+    mood_capture.append(mood_dict)
+    print(mood_dict)
+
+for mood in mood_capture:
+    index = mood_capture.index(mood)
+    if mood_capture[index]["pos"] > mood_capture[index]["neg"]:
+        print(f" Chapter {index + 1} has positive mood")
+    elif mood_capture[index]["pos"] < mood_capture[index]["neg"]:
+        print(f" Chapter {index + 1} has negative mood")
+
+
+
 
 
